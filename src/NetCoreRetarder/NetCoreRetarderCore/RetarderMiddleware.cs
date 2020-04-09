@@ -6,20 +6,20 @@ namespace NetCoreRetarderCore
 {
     public class RetarderMiddleware : IMiddleware
     {
+        private IStrategyAwait strategyAwait;
 
-        public RetarderMiddleware()
+        public RetarderMiddleware(IStrategyAwait strategyAwait)
         {
+            this.strategyAwait = strategyAwait;
         }
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var random = new Random();
-            var awaitMilliseconds = random.Next(1, 1000);
-            Console.WriteLine($"awaiting {awaitMilliseconds}");
-            await Task.Delay(awaitMilliseconds);
-            Console.WriteLine($"***awaited {awaitMilliseconds}");
-
+            while (strategyAwait != null)
+                strategyAwait = await strategyAwait?.AwaitDelay();
+            
             await next(context);
+            
         }
     }
 }
