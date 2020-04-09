@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NetCoreRetarderCore;
 
 namespace NetCoreRetarder
 {
@@ -25,11 +26,8 @@ namespace NetCoreRetarder
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //what if we comment this ?
-            //services.AddSingleton<RetarderMiddleware>();
-            services.AddTransient<RetarderMiddleware>();
+            services.AddRetarder();
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -41,8 +39,7 @@ namespace NetCoreRetarder
             app.UseRouting();
 
             app.UseAuthorization();
-            //app.UseMiddleware(typeof(RetarderMiddleware));
-            app.UseMiddleware<RetarderMiddleware>();
+            app.UseRetarder();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
