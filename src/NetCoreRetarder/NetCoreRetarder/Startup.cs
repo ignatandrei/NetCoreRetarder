@@ -25,6 +25,7 @@ namespace NetCoreRetarder
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //what if we comment this ?
             //services.AddSingleton<RetarderMiddleware>();
             services.AddTransient<RetarderMiddleware>();
         }
