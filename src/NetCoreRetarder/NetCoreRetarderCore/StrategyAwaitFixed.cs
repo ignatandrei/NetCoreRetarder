@@ -12,7 +12,12 @@ namespace NetCoreRetarderCore
             this.milliseconds = milliseconds;
         }
 
-        public async Task<IStrategyAwait> AwaitDelay()
+        public Task<IStrategyAwait> AwaitDelayAfter()
+        {
+            return null;
+        }
+
+        public async Task<IStrategyAwait> AwaitDelayBefore()
         {
             Console.WriteLine($"waiting {milliseconds}");
             

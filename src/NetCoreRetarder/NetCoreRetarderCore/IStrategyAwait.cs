@@ -4,6 +4,7 @@ namespace NetCoreRetarderCore
 {
     public interface IStrategyAwait
     {
-        Task<IStrategyAwait> AwaitDelay();
+        Task<IStrategyAwait> AwaitDelayBefore();
+        Task<IStrategyAwait> AwaitDelayAfter();
     }
 }

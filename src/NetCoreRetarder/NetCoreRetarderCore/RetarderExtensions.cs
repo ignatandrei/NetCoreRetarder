@@ -11,12 +11,11 @@ namespace NetCoreRetarderCore
         public static void AddRetarder(this IServiceCollection serviceCollection)
         {
             serviceCollection
-                .AddTransient<IStrategyAwait, StrategyAwaitFixed>(
+                .AddTransient<IStrategyAwait, StrategyAwaitRandom>(
                     it =>
                     {
-                        var random = new Random();
-                        var awaitMilliseconds = random.Next(1, 1000);
-                        return new StrategyAwaitFixed(awaitMilliseconds);
+                        
+                        return new StrategyAwaitRandom(1,1000);
                     }
                 );
             serviceCollection.AddTransient<RetarderMiddleware>();

@@ -15,11 +15,17 @@ namespace NetCoreRetarderCore
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            while (strategyAwait != null)
-                strategyAwait = await strategyAwait?.AwaitDelay();
+            var st = strategyAwait;
+            while (st != null)
+                st = await st.AwaitDelayBefore();
             
             await next(context);
-            
+            st = strategyAwait;
+
+            while (st != null)
+                st = await st.AwaitDelayAfter();
+
+
         }
     }
 }
